@@ -9,7 +9,7 @@ import soccer_evaluation_function
 # 创建文件夹
 home_folder_path = r"E:\双创\soccer\samples"  # 主文件路径
 subfolder_name = "sample_1"  # 子文件夹名称
-subfolder_path = soccer_audio_helper_functions.create_folder(home_folder_path, subfolder_name)
+subfolder_path = soccer_audio_helper_functions.create_subfolder(home_folder_path, subfolder_name)
 
 # 保存路径
 raw_video_path = r"E:\双创\soccer\dataset\video\soccer_0001_video.mp4"

@@ -43,9 +43,9 @@ def evaluation_function(our_data_path, stamp_data_path):  # our_time是一个二
             if judge(our_list[i][0], our_list[i][1], stamp_list[j][0], stamp_list[j][1]):
                 # ength_sum_intersection += intersection(our_list[i][0], our_list[i][1], stamp_list[j][0], stamp_list[j][1])
                 length_sum_union += union(our_list[i][0], our_list[i][1], stamp_list[j][0], stamp_list[j][1])
-    for i in range(len(our_time)):
+    for i in range(len(our_list)):
         length_sum_intersection += our_list[i][1] - our_list[i][0]
-    for j in range(len(stamp_time)):
+    for j in range(len(stamp_list)):
         length_sum_intersection += stamp_list[j][1] - stamp_list[j][0]
     length_sum_intersection = length_sum_intersection - length_sum_union
     # print(length_sum_intersection)

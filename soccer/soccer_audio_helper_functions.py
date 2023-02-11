@@ -10,10 +10,10 @@ import librosa.display
 import cv2
 
 
-def create_folder(home_folder_path, subfolder_name):
+def create_subfolder(home_folder_path, subfolder_name):
     subfolder_path = home_folder_path + "./" + subfolder_name
-    if os.path.exists(subfolder_path):
-        # shutil.rmtree(subfolder_path)
+    if os.path.exists(subfolder_path):  # 检测要创建的子文件夹是否已经存在
+        # shutil.rmtree(subfolder_path)  # 删除已经存在的子文件夹
         print("The folder already exists.")
     else:
         os.mkdir(subfolder_path)
