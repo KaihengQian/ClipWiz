@@ -3,6 +3,7 @@ import pandas as pd
 import librosa
 import video_editor
 import soccer_audio_helper_functions
+import soccer_cv_helper_functions
 import soccer_evaluation_function
 
 
@@ -23,8 +24,8 @@ story_path = r"E:\双创\soccer\dataset\story\0001_story.txt"
 evaluation_path = subfolder_path + r"\result\evaluation.csv"
 
 
-# 视频预处理
-soccer_audio_helper_functions.video_preprocess(raw_video_path, input_video_path)
+# 视频预处理（删除开球前的视频片段）
+soccer_cv_helper_functions.video_preprocess(raw_video_path, input_video_path)
 
 # 提取音频
 soccer_audio_helper_functions.audio_extract(input_video_path, audio_path)
