@@ -89,7 +89,7 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
     predict_story['score'] = predict_story['predict_result_percentage'] * predict_story['weight']
     predict_story.to_csv(predict_story_path)
 
-    # 计算加权查全率
+    # 计算加权召回率
     event_weight = np.array(predict_event['weight'])
     event_weight = event_weight.sum()
     predict_event_score = np.array(predict_event['score'])
@@ -102,7 +102,7 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
     predict_story_score = predict_story_score.sum()
     predict_story_recall_rate = predict_story_score / story_weight
 
-    # 计算查准率
+    # 计算准确率
     predict_time_sum = (our_end - our_start).sum()
 
     predict_event_result = predict_event_result.sum()
@@ -118,11 +118,11 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
                                                                                            + predict_story_recall_rate)
 
     # 输出评价结果
-    evaluation = "针对event的加权查全率为：  " + str(predict_event_recall_rate) + "\n" + \
-                 "针对event的查准率为：  " + str(predict_event_precision_rate) + "\n" + \
+    evaluation = "针对event的加权召回率为：  " + str(predict_event_recall_rate) + "\n" + \
+                 "针对event的准确率为：  " + str(predict_event_precision_rate) + "\n" + \
                  "针对event的F_beta值为：  " + str(predict_event_F_beta) + "\n" + \
-                 "针对story的加权查全率为：  " + str(predict_story_recall_rate) + "\n" + \
-                 "针对story的查准率为：  " + str(predict_story_precision_rate) + "\n" + \
+                 "针对story的加权召回率为：  " + str(predict_story_recall_rate) + "\n" + \
+                 "针对story的准确率为：  " + str(predict_story_precision_rate) + "\n" + \
                  "针对story的F_beta值为：  " + str(predict_story_F_beta)
     with open(evaluation_path, "w") as f:
         f.write(evaluation)
