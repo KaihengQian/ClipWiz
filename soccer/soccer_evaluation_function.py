@@ -25,7 +25,16 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
 
     predict_event = event
     predict_event['weight'] = 0  # 为不同事件赋不同权重
-
+    predict_event.loc[
+        ((predict_event['event_type'] == 'overhead kick') | (predict_event['event_type'] == 'solo drive') |
+         (predict_event['event_type'] == 'goal') | (predict_event['event_type'] == 'penalty kick') |
+         (predict_event['event_type'] == 'red card')) & (predict_event['flag'] == 0), 'weight'] = 3
+    predict_event.loc[
+        ((predict_event['event_type'] == 'overhead kick') | (predict_event['event_type'] == 'solo drive') |
+         (predict_event['event_type'] == 'goal') | (predict_event['event_type'] == 'penalty kick') |
+         (predict_event['event_type'] == 'red card')) & (predict_event['flag'] == 1), 'weight'] = 2
+    predict_event.loc[(predict_event['event_type'] == 'shot') | (predict_event['event_type'] == 'corner') |
+                      (predict_event['event_type'] == 'free kick'), 'weight'] = 1
     predict_event_result = np.zeros(len(event_start))  # 保存预测结果与标注的交集
     i = 0
     while i <= len(our_start):
@@ -46,7 +55,20 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
 
     predict_story = story
     predict_story['weight'] = 0  # 为不同事件赋不同权重
-
+    predict_event.loc[
+        ((predict_event['event_type'] == 'overhead kick') | (predict_event['event_type'] == 'solo drive') |
+         (predict_event['event_type'] == 'goal') | (predict_event['event_type'] == 'penalty kick') |
+         (predict_event['event_type'] == 'red card') | (predict_event['event_type'] == 'corner & goal') |
+         (predict_event['event_type'] == 'free kick & goal')) & (predict_event['flag'] == 0), 'weight'] = 3
+    predict_event.loc[
+        ((predict_event['event_type'] == 'overhead kick') | (predict_event['event_type'] == 'solo drive') |
+         (predict_event['event_type'] == 'goal') | (predict_event['event_type'] == 'penalty kick') |
+         (predict_event['event_type'] == 'red card') | (predict_event['event_type'] == 'corner & goal') |
+         (predict_event['event_type'] == 'free kick & goal')) & (predict_event['flag'] == 1), 'weight'] = 2
+    predict_event.loc[(predict_event['event_type'] == 'corner & shot') |
+                      (predict_event['event_type'] == 'free kick & shot'), 'weight'] = 2
+    predict_event.loc[(predict_event['event_type'] == 'shot') | (predict_event['event_type'] == 'corner') |
+                      (predict_event['event_type'] == 'free kick'), 'weight'] = 1
     predict_story_result = np.zeros(len(story_start))  # 保存预测结果与标注的交集
     i = 0
     while i <= len(our_start):
@@ -62,8 +84,9 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
                 predict_story_result[j] += intersection
 
     predict_story['predict_result'] = predict_story_result
-    predict_story['score'] = predict_story['predict_result'] / (
-                predict_story['end_point'] - predict_story['start_point']) * predict_story['weight']
+    predict_story['predict_result_percentage'] = predict_story['predict_result'] / (
+                predict_story['end_point'] - predict_story['start_point'])
+    predict_story['score'] = predict_story['predict_result_percentage'] * predict_story['weight']
     predict_story.to_csv(predict_story_path)
 
     # 计算加权查全率
@@ -88,10 +111,18 @@ def evaluation_function(input_video_path, time_list_path, event_path, story_path
     predict_story_result = predict_story_result.sum()
     predict_story_precision_rate = predict_story_result / predict_time_sum
 
+    # 计算F_beta值
+    predict_event_F_beta = 2 * predict_event_precision_rate * predict_event_recall_rate / (predict_event_precision_rate
+                                                                                           + predict_event_recall_rate)
+    predict_story_F_beta = 2 * predict_story_precision_rate * predict_story_recall_rate / (predict_story_precision_rate
+                                                                                           + predict_story_recall_rate)
+
     # 输出评价结果
     evaluation = "针对event的加权查全率为：  " + str(predict_event_recall_rate) + "\n" + \
                  "针对event的查准率为：  " + str(predict_event_precision_rate) + "\n" + \
+                 "针对event的F_beta值为：  " + str(predict_event_F_beta) + "\n" + \
                  "针对story的加权查全率为：  " + str(predict_story_recall_rate) + "\n" + \
-                 "针对story的查准率为：  " + str(predict_story_precision_rate)
+                 "针对story的查准率为：  " + str(predict_story_precision_rate) + "\n" + \
+                 "针对story的F_beta值为：  " + str(predict_story_F_beta)
     with open(evaluation_path, "w") as f:
         f.write(evaluation)
