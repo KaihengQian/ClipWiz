@@ -21,7 +21,9 @@ time_list_path = subfolder_path + r"\result\time_list.csv"
 output_video_path = subfolder_path + r"\result\highlights.mp4"
 event_path = r"E:\双创\soccer\dataset\event\0001_event.txt"
 story_path = r"E:\双创\soccer\dataset\story\0001_story.txt"
-evaluation_path = subfolder_path + r"\result\evaluation.csv"
+predict_event_path = subfolder_path + r"\result\predict_event.csv"
+predict_story_path = subfolder_path + r"\result\predict_story.csv"
+evaluation_path = subfolder_path + r"\result\evaluation.txt"
 
 
 # 视频预处理（删除开球前的视频片段）
@@ -62,4 +64,4 @@ video_editor.get_time_list(block_audio_info_path, time_list_path)
 video_editor.video_edit(input_video_path, time_list_path, output_video_path)
 
 # 应用评估函数对准确率进行评价
-soccer_evaluation_function.evaluation_function(time_list_path, event_path, story_path)
+soccer_evaluation_function.evaluation_function(time_list_path, event_path, story_path, predict_event_path, predict_story_path, evaluation_path)
