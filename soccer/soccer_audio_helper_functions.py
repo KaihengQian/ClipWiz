@@ -1,25 +1,9 @@
-import os
-import shutil
 import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from moviepy.editor import AudioFileClip
 import librosa.display
-
-
-def create_subfolder(home_folder_path, subfolder_name):
-    subfolder_path = home_folder_path + "./" + subfolder_name
-    if os.path.exists(subfolder_path):  # 检测要创建的子文件夹是否已经存在
-        # shutil.rmtree(subfolder_path)  # 删除已经存在的子文件夹
-        print("The folder already exists.")
-    else:
-        os.mkdir(subfolder_path)
-        subfolder_path = os.path.join(home_folder_path, "./" + subfolder_name)
-        file_name = ["./data", "./result", "./graph"]
-        for name in file_name:
-            os.mkdir(subfolder_path + name)
-    return subfolder_path
 
 
 def audio_extract(video_path, audio_path):
@@ -47,8 +31,7 @@ def audio_energy(audio, sample_rate, sample_number, block_number, block_audio_in
     # graph_2_path = "E:\\双创\\soccer\\result\\audio_short-time_energy_distribution.png"  # 短时能量分布图
     # plt.hist(energy)
     # plt.savefig(graph_2_path)
-    for i in range(block_number):
-        block_audio_info.loc[i, 'energy'] = energy[i]
+    block_audio_info['energy'] = energy
 
     block_audio_info.to_csv(block_audio_info_path)
 
@@ -73,8 +56,7 @@ def audio_zero_crossings(audio, sample_rate, sample_number, block_number, block_
     # graph_4_path = "E:\\双创\\soccer\\result\\audio_zero_crossings.png"  # 过零次数图
     # plt.hist(energy)
     # plt.savefig(graph_4_path)
-    for i in range(block_number):
-        block_audio_info.loc[i, 'zero_crossings'] = zero_crossings[i]
+    block_audio_info['zero_crossings'] = zero_crossings
 
     block_audio_info.to_csv(block_audio_info_path)
 

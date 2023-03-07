@@ -1,7 +1,7 @@
 import math
 import pandas as pd
 import librosa
-import video_editor
+import soccer_other_helper_functions
 import soccer_audio_helper_functions
 import soccer_cv_helper_functions
 import soccer_evaluation_function
@@ -10,7 +10,7 @@ import soccer_evaluation_function
 # 创建文件夹
 home_folder_path = r"E:\双创\soccer\samples"  # 主文件路径
 subfolder_name = "sample_1"  # 子文件夹名称
-subfolder_path = soccer_audio_helper_functions.create_subfolder(home_folder_path, subfolder_name)
+subfolder_path = soccer_other_helper_functions.create_subfolder(home_folder_path, subfolder_name)
 
 # 保存路径
 raw_video_path = r"E:\双创\soccer\dataset\video\soccer_0001_video.mp4"
@@ -55,13 +55,14 @@ soccer_audio_helper_functions.audio_energy(audio, sample_rate, sample_number, bl
 # 获取块的过零率信息
 soccer_audio_helper_functions.audio_zero_crossings(audio, sample_rate, sample_number, block_number, block_audio_info_path)
 
-# 获取块的...信息
+# 计算块的最终得分
+soccer_other_helper_functions.score_calculate(block_audio_info_path)
 
 # 获取所需块的时间序列
-video_editor.get_time_list(block_audio_info_path, time_list_path)
+soccer_other_helper_functions.get_time_list(block_audio_info_path, time_list_path)
 
 # 剪辑原视频获得集锦
-video_editor.video_edit(input_video_path, time_list_path, output_video_path)
+soccer_other_helper_functions.video_edit(input_video_path, time_list_path, output_video_path)
 
 # 应用评估函数对准确率进行评价
 soccer_evaluation_function.evaluation_function(time_list_path, event_path, story_path, predict_event_path, predict_story_path, evaluation_path)
