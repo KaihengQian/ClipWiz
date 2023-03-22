@@ -9,21 +9,22 @@ from moviepy import editor
 def create_subfolder(home_folder_path, subfolder_name):
     subfolder_path = home_folder_path + "./" + subfolder_name
     if os.path.exists(subfolder_path):  # 检测要创建的子文件夹是否已经存在
-        # shutil.rmtree(subfolder_path)  # 删除已经存在的子文件夹
         print("The folder already exists.")
-    else:
-        os.mkdir(subfolder_path)
-        subfolder_path = os.path.join(home_folder_path, "./" + subfolder_name)
-        file_name = ["./data", "./result", "./graph"]
-        for name in file_name:
-            os.mkdir(subfolder_path + name)
+        shutil.rmtree(subfolder_path)  # 删除已经存在的子文件夹
+    os.mkdir(subfolder_path)
+    subfolder_path = os.path.join(home_folder_path, "./" + subfolder_name)
+    file_name = ["./data", "./result", "./graph"]
+    for name in file_name:
+        os.mkdir(subfolder_path + name)
     return subfolder_path
 
 
 def score_calculate(block_audio_info_path):
+    weight_1 = 0.3263118490343915
+    weight_2 = 0.49079651798722146
     block_audio_info = pd.read_csv(block_audio_info_path)
-    block_audio_info['score'] = block_audio_info['energy'] + block_audio_info['zero_crossings']
-    block_audio_info.to_csv(block_audio_info_path)
+    block_audio_info['score'] = block_audio_info['energy'] * weight_1 + block_audio_info['zero_crossings'] * weight_2
+    block_audio_info.to_csv(block_audio_info_path, index=False)
 
 
 def get_time_list(block_audio_info_path, time_list_path):
@@ -66,10 +67,10 @@ def get_time_list(block_audio_info_path, time_list_path):
     # 考虑反应时间，将块的开始时间相应提前
     response_time = 5
     for i in range(len(time_list)):
-        if time_list.loc[i, 'start'] >= response_time:
-            time_list.loc[i, 'start'] -= response_time
+        if time_list.iloc[i]['start'] >= response_time:
+            time_list.iloc[i]['start'] -= response_time
 
-    time_list.to_csv(time_list_path)
+    time_list.to_csv(time_list_path, index=False)
 
 
 def video_edit(input_video_path, time_list_path, output_video_path):

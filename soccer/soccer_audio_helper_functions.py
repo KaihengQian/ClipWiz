@@ -31,9 +31,10 @@ def audio_energy(audio, sample_rate, sample_number, block_number, block_audio_in
     # graph_2_path = "E:\\双创\\soccer\\result\\audio_short-time_energy_distribution.png"  # 短时能量分布图
     # plt.hist(energy)
     # plt.savefig(graph_2_path)
-    block_audio_info['energy'] = energy
+    processed_energy = (energy - np.min(energy)) / (np.max(energy) - np.min(energy))
+    block_audio_info['energy'] = processed_energy
 
-    block_audio_info.to_csv(block_audio_info_path)
+    block_audio_info.to_csv(block_audio_info_path, index=False)
 
 
 def audio_zero_crossings(audio, sample_rate, sample_number, block_number, block_audio_info_path):
@@ -56,8 +57,8 @@ def audio_zero_crossings(audio, sample_rate, sample_number, block_number, block_
     # graph_4_path = "E:\\双创\\soccer\\result\\audio_zero_crossings.png"  # 过零次数图
     # plt.hist(energy)
     # plt.savefig(graph_4_path)
-    block_audio_info['zero_crossings'] = zero_crossings
+    processed_zero_crossings = (zero_crossings - np.min(zero_crossings)) / (np.max(zero_crossings) -
+                                                                            np.min(zero_crossings))
+    block_audio_info['zero_crossings'] = processed_zero_crossings
 
-    block_audio_info.to_csv(block_audio_info_path)
-
-
+    block_audio_info.to_csv(block_audio_info_path, index=False)
