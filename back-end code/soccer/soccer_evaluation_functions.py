@@ -1,18 +1,41 @@
 import numpy as np
 import pandas as pd
 import cv2
+import pymysql
 
 
-def evaluation_function(input_video_path, time_list_path, event_path, story_path, predict_event_path,
+def evaluation_function(input_video_path, db, table_name, event_path, story_path, predict_event_path,
                         predict_story_path, evaluation_path):
     cap = cv2.VideoCapture(input_video_path)
     fps = cap.get(5)  # 获取帧率
     cap.release()
 
+    cursor = db.cursor()
+
+    sql = f"SELECT start FROM {table_name}"
+    try:
+        cursor.execute(sql)
+        column_data = [row[0] for row in cursor.fetchall()]
+        start_list = np.array(column_data)
+        print(f"成功从表 {table_name} 中取出 start 列。")
+    except pymysql.Error as e:
+        print(f"从表 {table_name} 中取出 start 列时出错：{e}")
+        return
+    sql = f"SELECT end FROM {table_name}"
+    try:
+        cursor.execute(sql)
+        column_data = [row[0] for row in cursor.fetchall()]
+        end_list = np.array(column_data)
+        print(f"成功从表 {table_name} 中取出 end 列。")
+    except pymysql.Error as e:
+        print(f"从表 {table_name} 中取出 end 列时出错：{e}")
+        return
+
+    cursor.close()
+
     # 转成以帧为单位
-    time_list = pd.read_csv(time_list_path)
-    our_start = np.array(time_list['start']) * fps
-    our_end = np.array(time_list['end']) * fps
+    our_start = start_list * fps
+    our_end = end_list * fps
 
     # 以空格为分隔符读取event和story，并添加字段名
     event = pd.read_csv(event_path, delim_whitespace=True, header=None, names=['event_type', 'start_point', 'end_point',
