@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+#title {
+    margin-top: -10%;
+    text-align: center;
+    color: #f9f9f9;
+    font-style: italic;
+    font-size: xx-large;
+}
+
+#content {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 0;
+}
+
+.box1 {
+    text-align: center;
+    width: 45%;
+    padding: 80px;
+    border: 3px solid #ccc;
+    border-radius: 5%;
+
+}
+
+.box2 {
+    text-align: center;
+    width: 45%;
+    margin-left: 10%;
+    padding: 80px;
+    border: 3px solid #ccc;
+    border-radius: 5%;
+
+}
+
+
+#bilibili {
+    color: #f9f9f9;
+}
+
+#football {
+    color: #f9f9f9;
+}
+
+#upload {
+    border: 2px dashed #aaa;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#bilibiliFileInput {
+    margin-top: 10%;
+}
+
+#textInput {
+    width: 250px;
+}
+

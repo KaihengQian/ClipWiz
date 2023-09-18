@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clipwiz</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+       html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/star.jpg') }}") no-repeat 0px 0px;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+        }
+</style>
+
+</head>
+<body>
+<div id="title">
+  <img src="{{ url_for('static', filename='images/clipswiz.png') }}" class="logo" width="600" height="300">
+</div>
+<div id="content">
+  <div class="box1" id="bilibili">
+    <h1>Bilibili</h1>
+    <form id="bilibiliForm" action="/bilibili" method="post" enctype="multipart/form-data">
+      <label for="bilibiliLinkInput">Link/BV:</label>
+      <input type="text" id="bilibiliLinkInput" name="text_content">
+      <input type="button" id="processButton" value="Submit" onclick="submitForm('bilibiliForm');window.open('/loading')">
+{#        <button id="processButton">Process Data</button>#}
+{#        <button type="submit" id ="processButton" onclick="submitForm('bilibiliForm');window.open('/loading')">Submit</button>#}
+      <input type="file" name="file">
+      <input type="button" value="Upload" onclick="uploadFile('bilibiliForm')">
+    </form>
+  </div>
+  <div class="box2" id="football">
+    <h1>Football</h1>
+    <form id="footballForm" action="/football" method="post" enctype="multipart/form-data">
+      <div id="upload" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" onclick="footballFileInput.click()">
+        <p>Click or drag and drop files here</p>
+      </div>
+      <input type="file" id="footballFileInput" name="file" style="display:none;" onchange="handleFileSelect(event)">
+      <ul id="fileList"></ul>
+      <input type="button" value="Upload" onclick="uploadFile('footballForm');setTimeout(function() { window.open('/football1'); }, 5000)">
+    </form>
+  </div>
+</div>
+</body>
+</html>

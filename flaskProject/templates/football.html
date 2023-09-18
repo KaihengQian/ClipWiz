@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Football Video</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/football.css') }}">
+	<script src="{{ url_for('static', filename='js/football.js') }}"></script>
+</head>
+<body>
+	<div class="header">
+		<p>Football Match Highlights</p>
+	</div>
+	<div class="video-container">
+		<div class="video">
+			<video class="my-video" width="100%" height="100%" controls poster="./img/loading.gif">
+				<source src="{{ url_for('static',filename='videos/highlights.mp4') }}" type="video/mp4">
+			</video>
+		</div>
+		<div class="video-description">
+			<div class="description-text">
+				<p>(Click here to download highlights)</p>
+			</div>
+			<div class="download-button">
+				<a href="{{ url_for('static',filename='videos/highlights.mp4') }}" download>Download</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
