@@ -6,8 +6,6 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
-import sys
-sys.path.append("D:/Code/Project/flaskProject/soccer/mobilenetv3/")
 from model_v3 import mobilenet_v3_large
 
 
@@ -28,7 +26,7 @@ def predict(frame):
     # expand batch dimension
     img = torch.unsqueeze(img, dim=0)
     # read class_indict
-    json_path = 'D:/Code/Project/back-end code/soccer/mobilenetv3/class_indices.json'
+    json_path = 'class_indices.json'
     assert os.path.exists(json_path), "file: '{}' dose not exist.".format(json_path)
 
     with open(json_path, "r") as f:
@@ -37,7 +35,7 @@ def predict(frame):
     # create model
     model = mobilenet_v3_large(num_classes=8).to(device)
     # load model weights
-    model_weight_path = "D:/Code/Project/back-end code/soccer/mobilenetv3/final1.pth"
+    model_weight_path = "trained_model.pth"
     model.load_state_dict(torch.load(model_weight_path, map_location=device))
     model.eval()
     with torch.no_grad():

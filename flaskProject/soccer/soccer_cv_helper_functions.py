@@ -1,17 +1,14 @@
 import shutil
-import math
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 import pymysql
 import cv2
 from moviepy import editor
-import sys
-sys.path.append("D:/Code/Project/flaskProject/soccer/")
-import mobilenetv3.predict1 as pred
+
+import mobilenetv3.predict as pred
 
 
-def is_kick_off(frame):  # 检测开球帧
+# 检测开球帧
+def is_kick_off(frame):
     res = pred.predict(frame)
     return res == "start"
 
