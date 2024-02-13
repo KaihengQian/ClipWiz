@@ -1,11 +1,12 @@
 from collections import defaultdict
-import pandas as pd
-import numpy as np
 import jieba
 jieba.setLogLevel(jieba.logging.INFO)
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
+
 
 engine = create_engine('mysql+pymysql://root:123456@localhost:3306/danmu')
+
+
 # jieba分词后去除停用词
 def seg_word(sentence):
     seg_list = jieba.lcut(sentence)
@@ -14,7 +15,7 @@ def seg_word(sentence):
         seg_result.append(i)
     stopwords = set()
 
-    with open('D:\桌面\dict\stopwords.txt', 'r', encoding='utf-8') as fr:
+    with open('dict/stopwords.txt', 'r', encoding='utf-8') as fr:
         for i in fr:
             stopwords.add(i.strip())
     return list(filter(lambda x: x not in stopwords, seg_result))
@@ -22,15 +23,15 @@ def seg_word(sentence):
 
 # 找出文本中的情感词、否定词和程度副词
 def classify_words(word_list):
-    with open('D:\桌面\dict\BosonNLP.txt', 'r', encoding='utf-8') as sen_file:
+    with open('dict/BosonNLP.txt', 'r', encoding='utf-8') as sen_file:
         sen_list = sen_file.readlines()     # 获取字典文件内容
         sen_dict = defaultdict()            # 创建情感字典
         for i in sen_list:
             if len(i.split(' ')) == 2:
                 sen_dict[i.split(' ')[0]] = i.split(' ')[1]
-    with open('D:\桌面\dict\否定词.txt', 'r', encoding='utf-8') as not_word_file:
+    with open('dict/NegativeWords.txt', 'r', encoding='utf-8') as not_word_file:
         not_word_list = not_word_file.readlines()
-    with open('D:\桌面\dict\程度副词.txt', 'r', encoding='utf-8') as degree_file:
+    with open('dict/AdverbOfDegree.txt', 'r', encoding='utf-8') as degree_file:
         degree_list = degree_file.readlines()
         degree_dict = defaultdict()
         for i in degree_list:
@@ -83,18 +84,3 @@ def sentiment_score(sentence):
     sen_word, not_word, degree_word = classify_words(seg_list)
     score = score_sentiment(sen_word, not_word, degree_word, seg_list)
     return score
-
-
-#with open('D:/桌面/selected_danmu.csv', 'r', encoding='utf-8') as f:
-#    df = pd.read_csv(f)
-#df['score'] = 0
-#for i in range(0, df.shape[0]):
-#    df.loc[i, 'score'] = sentiment_score(df.loc[i, 'text'])
-#df.to_csv('D:/桌面/danmu_out.csv', index=0)
-
-
-sentence = "今天天气真好，我们一起去游泳吧，我新买了一件很可爱的泳衣"
-print(sentiment_score(sentence))
-
-
-

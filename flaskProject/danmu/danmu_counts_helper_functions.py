@@ -3,9 +3,10 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from requests_html import HTMLSession
-# import matplotlib.pyplot as plt
 import jieba
 from sqlalchemy import create_engine, text
+
+
 engine = create_engine('mysql+pymysql://root:123456@localhost:3306/user1')
 
 # 定义请求头 request headers
@@ -142,7 +143,6 @@ def clear_similarities():
 
 
 def danmu_counts(block_length, chose_rate):
-
     # 读取弹幕文件
     tmp_dm = pd.read_sql(text("select * from denoise"), engine.connect())
     # 确定时间区间总分组数量和所选区间数量
@@ -228,18 +228,3 @@ def select_danmu():
     # selected_danmu.to_csv(danmu_output_path, index=False)
     selected_danmu.to_sql('selected_danmu', con=engine, if_exists='replace', index=False)
     print("弹幕初筛成功")
-
-
-# 展示弹幕数据图
-# def show_danmu_plt(danmu_input_path, fig_path):
-#     dm = pd.read_csv(danmu_input_path)
-#     dm_time = dm['elapse_time']
-#     plt.hist(dm_time, bins=int(max(dm_time) / 3))  # bins表示将数据分为多少个区间,与视频时间相关
-#     plt.title('Barrage Histogram')
-#     plt.xlabel('Time')
-#     plt.ylabel('Barrage Count')
-#     plt.savefig(fig_path)
-
-
-
-
