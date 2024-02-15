@@ -1,12 +1,6 @@
 # ClipWiz
-
----
-
 This is the official repository of 2022 Shanghai Undergraduate Training Program for Innovation and Entrepreneurship _Assistant for Automatic Generation of Video Highlights in Multiple Scenarios._
 ## Repository structure
-
----
-
 ```
 flaskProject/
 │  app.py                                    // script program
@@ -66,8 +60,6 @@ flaskProject/
 ```
 ## Setup
 
----
-
 1. Enter the flaskProject directory.
 ```
 cd flaskProject
@@ -83,22 +75,18 @@ pip install -r requirements.txt
 - Download the [Microsoft Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/?form=MA13LH#downloads) that corresponds to your browser version and place it in the right directory
 - Install the [Selenium IDE](https://microsoftedge.microsoft.com/addons/detail/selenium-ide/ajdpfmkffanmkhejnopjppegokpogffp) from the homepage of Microsoft Edge Extensions and keep it on
 ## Run pipeline
-
----
-
 You can run our web application like the script in the below:
 ```
 python app.py
 ```
 Notice, running our web application on GPUs can speed up processing.
 ## Project members
-
----
-
-**Leader(Account):**
-Kaiheng Qian ([KaihengQian](https://github.com/KaihengQian))
-**Members(Account):**
-Xiang Liao ([volcano26](https://github.com/volcano26))
-Chenlei Zhu ([Pankiller1](https://github.com/Pankiller1))
-Donghao Li ([1447083915](https://github.com/1447083915))
-Yifei Long ([YifeiLong](https://github.com/YifeiLong))
+```
+Leader(Account):
+Kaiheng Qian (KaihengQian)
+Members(Account):
+Xiang Liao (volcano26)
+Chenlei Zhu (Pankiller1)
+Donghao Li (1447083915)
+Yifei Long (YifeiLong)
+```
