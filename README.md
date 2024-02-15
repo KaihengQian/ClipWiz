@@ -81,12 +81,7 @@ python app.py
 ```
 Notice, running our web application on GPUs can speed up processing.
 ## Project members
-```
-Leader(Account):
-Kaiheng Qian (KaihengQian)
-Members(Account):
-Xiang Liao (volcano26)
-Chenlei Zhu (Pankiller1)
-Donghao Li (1447083915)
-Yifei Long (YifeiLong)
-```
+| Leader | Kaiheng Qian |  |  |  |
+| --- | --- | --- | --- | --- |
+| Members | Xiang Liao | Chenlei Zhu | Donghao Li | Yifei Long |
+
