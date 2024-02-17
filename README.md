@@ -1,7 +1,5 @@
 # ClipWiz
 This is the official repository of 2022 Shanghai Undergraduate Training Program for Innovation and Entrepreneurship _Assistant for Automatic Generation of Video Highlights in Multiple Scenarios._
-
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/39055961/1708138852223-d4b94d35-7736-404d-b5c7-e3764cf30a7d.png#averageHue=%236a6969&clientId=uc27b20fe-9fce-4&from=paste&height=470&id=u71acb1c9&originHeight=811&originWidth=864&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=55469&status=done&style=none&taskId=u9e60dfe5-1277-48a6-9d79-3971f588251&title=&width=500.20001220703125)
 ## Repository structure
 ```
 flaskProject/
